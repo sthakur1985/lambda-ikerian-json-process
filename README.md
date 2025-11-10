@@ -1,7 +1,7 @@
 # AWS Data Pipeline - Ikerian Cloud Engineer Assessment
 
 ## Overview
-This project implements an end-to-end AWS data pipeline that processes JSON patient data using S3, Lambda, and CloudWatch, all managed through Terraform infrastructure as code.
+This project implements an end-to-end AWS data pipeline that processes retina scan patient data using S3, Lambda, and CloudWatch, all managed through Terraform infrastructure as code. The pipeline extracts patient identification information from detailed retina scan records for downstream processing.
 
 ## Architecture
 ```
@@ -27,8 +27,8 @@ This project implements an end-to-end AWS data pipeline that processes JSON pati
 ### 2. Lambda Function
 - **Runtime**: Python 3.9
 - **Trigger**: S3 ObjectCreated events on .json files
-- **Processing**: Extracts `patient_id` and `patient_name` fields
-- **Output**: Saves processed data to processed bucket
+- **Processing**: Extracts `patient_id` and `patient_name` from retina scan data
+- **Output**: Saves simplified patient records to processed bucket
 
 ### 3. IAM Role & Policies
 - **Lambda Execution Role**: Allows Lambda to assume role
@@ -79,19 +79,29 @@ aws s3 cp ikerian_sample.json s3://$(terraform output -raw raw_data_bucket_name)
 ## File Structure
 ```
 ├── main.tf              # Main Terraform configuration
+├── providers.tf         # AWS provider configuration
 ├── variables.tf         # Terraform variables
-├── outputs.tf           # Terraform outputs
-├── lambda_function.py   # Lambda function code
-├── ikerian_sample.json  # Sample patient data
-├── deploy.ps1          # Windows deployment script
-├── deploy.sh           # Linux/Mac deployment script
-├── cleanup.ps1         # Cleanup script
-├── modules/            # Terraform modules
-│   ├── s3/            # S3 buckets module
-│   ├── lambda/        # Lambda function module
-│   ├── iam/           # IAM roles module
-│   └── README.md      # Module documentation
-└── README.md          # This documentation
+├── locals.tf           # Local values and naming
+├── outputs.tf          # Terraform outputs
+├── backend.tf          # Backend resources
+├── lambda_function.py  # Lambda function code
+├── ikerian_sample.json # Sample retina scan data
+├── deploy.sh          # Deployment script
+├── env/               # Environment configurations
+│   ├── backend.hcl    # Dev backend config
+│   └── prod-backend.hcl # Prod backend config
+├── .github/workflows/ # GitHub Actions
+│   └── deploy.yml     # CI/CD pipeline
+├── layers/            # Lambda layers
+│   ├── requirements.txt # Python dependencies
+│   └── python/        # Layer packages
+├── modules/           # Terraform modules
+│   ├── s3/           # S3 buckets module
+│   ├── lambda/       # Lambda function module
+│   ├── iam/          # IAM roles module
+│   ├── layers/       # Lambda layers module
+│   └── README.md     # Module documentation
+└── README.md         # This documentation
 ```
 
 ## Sample Data Format
@@ -100,13 +110,20 @@ aws s3 cp ikerian_sample.json s3://$(terraform output -raw raw_data_bucket_name)
 ```json
 [
   {
-    "patient_id": "P001",
-    "patient_name": "John Doe",
-    "age": 35,
-    "diagnosis": "Hypertension",
-    "admission_date": "2024-01-15",
-    "doctor": "Dr. Smith",
-    "department": "Cardiology"
+    "patient_id": "A12345",
+    "patient_name": "Ikerian A",
+    "scan_date": "2025-01-01",
+    "retina_thickness_microns": 275,
+    "optic_disc_cup_ratio": 0.4,
+    "diagnosis": "normal"
+  },
+  {
+    "patient_id": "B67890",
+    "patient_name": "Ikerian B",
+    "scan_date": "2025-02-15",
+    "retina_thickness_microns": 305,
+    "optic_disc_cup_ratio": 0.6,
+    "diagnosis": "suspected glaucoma"
   }
 ]
 ```
@@ -115,8 +132,12 @@ aws s3 cp ikerian_sample.json s3://$(terraform output -raw raw_data_bucket_name)
 ```json
 [
   {
-    "patient_id": "P001",
-    "patient_name": "John Doe"
+    "patient_id": "A12345",
+    "patient_name": "Ikerian A"
+  },
+  {
+    "patient_id": "B67890",
+    "patient_name": "Ikerian B"
   }
 ]
 ```
