@@ -17,7 +17,7 @@ resource "aws_lambda_function" "data_processor" {
   function_name = "${var.project_name}-data-processor"
   role = var.lambda_role_arn
   handler = "lambda_function.lambda_handler"
-  runtime = "python3.9"
+  runtime = "python3.12"
   timeout = var.timeout
   
   source_code_hash = data.archive_file.lambda_zip.output_base64sha256

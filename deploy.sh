@@ -7,8 +7,8 @@ echo "Deploying to $ENV environment..."
 
 # Build layer
 echo "Building layer..."
-mkdir -p layers/python/lib/python3.9/site-packages
-pip install -r layers/requirements.txt -t layers/python/lib/python3.9/site-packages --no-deps
+mkdir -p layers/python/lib/python3.12/site-packages
+pip install -r layers/requirements.txt -t layers/python/lib/python3.12/site-packages --no-deps
 
 # Use appropriate backend config
 if [ "$ENV" = "prod" ]; then

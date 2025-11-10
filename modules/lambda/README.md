@@ -46,7 +46,7 @@ module "lambda" {
 
 ## Function Details
 
-- **Runtime**: Python 3.9
+- **Runtime**: Python 3.12
 - **Handler**: `lambda_function.lambda_handler`
 - **Memory**: Default (128 MB)
 - **Architecture**: x86_64

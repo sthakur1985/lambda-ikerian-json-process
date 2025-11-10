@@ -25,7 +25,7 @@ This project implements an end-to-end AWS data pipeline that processes retina sc
 - **Processed Data Bucket**: Stores processed JSON with extracted fields
 
 ### 2. Lambda Function
-- **Runtime**: Python 3.9
+- **Runtime**: Python 3.12
 - **Trigger**: S3 ObjectCreated events on .json files
 - **Processing**: Extracts `patient_id` and `patient_name` from retina scan data
 - **Output**: Saves simplified patient records to processed bucket
@@ -64,8 +64,8 @@ chmod +x deploy.sh
 ### Manual Deployment
 ```bash
 # Build layer
-mkdir -p layers/python/lib/python3.9/site-packages
-pip install -r layers/requirements.txt -t layers/python/lib/python3.9/site-packages
+mkdir -p layers/python/lib/python3.12/site-packages
+pip install -r layers/requirements.txt -t layers/python/lib/python3.12/site-packages
 
 # Deploy infrastructure
 terraform init

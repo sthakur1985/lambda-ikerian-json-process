@@ -1,7 +1,7 @@
 # Create a dummy file if layers directory is empty
 resource "local_file" "dummy_layer" {
   content  = "# Dummy file for layer\n"
-  filename = "${path.root}/layers/python/lib/python3.9/site-packages/dummy.py"
+  filename = "${path.root}/layers/python/lib/python3.12/site-packages/dummy.py"
 }
 
 data "archive_file" "layer_zip" {
@@ -17,6 +17,6 @@ resource "aws_lambda_layer_version" "dependencies" {
   layer_name       = "${var.project_name}-dependencies"
   source_code_hash = data.archive_file.layer_zip.output_base64sha256
 
-  compatible_runtimes = ["python3.9"]
+  compatible_runtimes = ["python3.12"]
   description         = "Dependencies layer for ${var.project_name}"
 }

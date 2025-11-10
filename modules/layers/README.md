@@ -42,7 +42,7 @@ The layer includes Python packages from `layers/requirements.txt`:
 layers/
 └── python/
     └── lib/
-        └── python3.9/
+        └── python3.12/
             └── site-packages/
                 ├── requests/
                 ├── pandas/
@@ -58,10 +58,10 @@ layers/
 
 ## Build Process
 
-1. Install dependencies: `pip install -r layers/requirements.txt -t layers/python/lib/python3.9/site-packages`
+1. Install dependencies: `pip install -r layers/requirements.txt -t layers/python/lib/python3.12/site-packages`
 2. Create layer zip: Archive `layers/python` directory
 3. Deploy layer: Terraform creates versioned layer resource
 
 ## Compatible Runtimes
 
-- Python 3.9
+- Python 3.12
