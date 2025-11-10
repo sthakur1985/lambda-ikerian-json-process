@@ -1,0 +1,6 @@
+# AWS Lambda Python Dependencies
+# Note: boto3 is already available in Lambda runtime environment
+# This file is for local development/testing if needed
+
+boto3>=1.26.0
+botocore>=1.29.0

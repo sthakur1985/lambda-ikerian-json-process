@@ -1,0 +1,14 @@
+# Terraform files
+*.tfstate
+*.tfstate.*
+.terraform/
+.terraform.lock.hcl
+
+# Lambda artifacts
+lambda_function.zip
+lambda_layer.zip
+layers/python/lib/
+
+# OS files
+.DS_Store
+Thumbs.db
