@@ -8,11 +8,6 @@ terraform {
   required_version = ">= 1.0"
 }
 
-# TODO: maybe add more regions later
-provider "aws" {
-  region = var.aws_region
-}
-
 module "layers" {
   source = "./modules/layers"
   project_name = var.project_name
